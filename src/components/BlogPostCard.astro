@@ -1,9 +1,11 @@
 ---
+import { Formatter } from "@utils/formatters";
+
 interface Props {
 	title: string;
 	description?: string;
 	image?: string;
-	date?: string;
+	date?: Date;
 }
 
 const { title, date, image, description } = Astro.props;
@@ -30,6 +32,6 @@ const { title, date, image, description } = Astro.props;
 			)
 		}
 
-		<span class="text-sm text-gray-300">{date}</span>
+		<span class="text-sm text-gray-300">{ date ? Formatter.formatDate(date) : "Fecha no disponible" }</span>
 	</div>
 </div>

@@ -2,6 +2,8 @@
 import BlogPostCard from "../components/BlogPostCard.astro";
 import { siteConfig } from "../config/site-config";
 import MainLayout from "../layouts/MainLayout.astro";
+
+// Astro.glob();
 ---
 
 <MainLayout title="Seba Blog">
@@ -18,13 +20,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 					title="Post 1"
 					description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 					image="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-					date="2023-10-01"
-				/>
-				<BlogPostCard 
-					title="Post 1"
-					description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-					image="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-					date="2023-10-01"
+					date={new Date("2023-10-01")}
 				/>
 			</div>
 		</div>
