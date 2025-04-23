@@ -26,9 +26,34 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { post } = Astro.props;
-const { title } = post.data
+const { title, author } = post.data
+
+const { Content, headings } = await post.render() // esto es para renderizar el contenido del md
+// headings es un array de objetos con el id y el text de los headings
+console.log("🚀 ~ headings:", headings)
 ---
 
 <BlogLayout title={title}>
-    <h1>Hola mundo -> {title}</h1>
+    <!-- <h1 class="text-md text-gray-500 mb-0">{title}</h1> -->
+    <h4 class="text-md text-gray-400 mb-0">{author}</h4>
+
+    <h3>Tabla de contenidos</h3>
+    <ol>
+        {
+            headings.map((headings, index) => (
+                <li>
+                    <a href={`#${ headings.slug }`}>
+                        { index + 1 } - { headings.text }
+                    </a>
+                </li>
+            ))
+        }
+    </ol>
+
+    <!-- Contenido -->
+    <Content />
+
+    <div class="my-20">
+        <a href="#btn-back">Ir arriba</a>
+    </div>
 </BlogLayout>
