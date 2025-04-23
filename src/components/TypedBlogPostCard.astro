@@ -24,7 +24,7 @@ const { title, description, image, date } = post.data; // este es lo mismo que c
 
 	<div class="flex flex-col justify-between py-6 lg:mx-6">
 		<a
-			href={"#"}
+			href={`/posts/${post.slug}`}
 			class="text-xl font-semibol hover:underline text-white"
 		>
 			{title}

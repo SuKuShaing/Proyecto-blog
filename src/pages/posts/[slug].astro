@@ -1,0 +1,34 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+
+export const getStaticPaths = (async () => {
+    
+    const blogPosts = await getCollection("blog");
+
+    return blogPosts.map((post) => {
+        return {
+            params: { slug: post.slug },
+            props: { post: post }
+        }
+    })
+    
+    // [{
+    //     params: { slug: 'post-01' },
+    //     props: {
+    //         title: 'Post 01 y qué pasa',
+    //         // description: 'Descripción del post 01',
+    //         // image: 'https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    //         // date: new Date('2023-10-01')
+    //     }
+    // }];
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { title } = post.data
+---
+
+<BlogLayout title={title}>
+    <h1>Hola mundo -> {title}</h1>
+</BlogLayout>
