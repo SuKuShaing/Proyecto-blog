@@ -3,25 +3,163 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import { Image } from "astro:assets";
 
 import post05Img from "@images/post-05.png";
-
+import { Picture } from "astro:assets";
 ---
 
 <MainLayout title="Imágenes">
-    <h1 class="text-5xl text-white">Imágenes</h1>
-    <h3>De SRC</h3>
-    <img src={ `${post05Img}` } width="250" height="250" alt=""> <!-- Esta se rompe -->
+	<h1 class="text-5xl text-white">Imágenes</h1>
+	<h2>De SRC</h2>
+	<h3>img de html</h3>
+	<img src={`${post05Img}`} width="250" height="250" alt="" />
+	<!-- Esta se rompe -->
 
-    <Image src={ post05Img } width="250" height="250" alt="imagen de ejemplo"/>
+	<h3>se muestra en 250 y mide 250</h3>
+	<Image src={post05Img} width="250" height="250" alt="imagen de ejemplo" />
+	<!-- Esta img mide 250 x 250 px y se muestra en ese tamaño -->
+
+	<h3>se muestra en 250 y mide 500</h3>
+	<Image
+		src={post05Img}
+		style={{ width: "250px", height: "250px" }}
+		width="500"
+		height="500"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 500 x 500 px y se muestra en 250 x 250 px, se vé de mejor calidad -->
+
+	<h3>Quality: Low</h3>
+	<Image
+		src={post05Img}
+		quality="low"
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 250 x 250 px y de calidad Low -->
+
+	<h3>Quality: Mid</h3>
+	<Image
+		src={post05Img}
+		quality="mid"
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 250 x 250 px y de calidad Mid -->
+
+	<h3>Quality: High</h3>
+	<Image
+		src={post05Img}
+		quality="high"
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 250 x 250 px y de calidad Hig -->
+
+	<h3>Quality: Max</h3>
+	<Image
+		src={post05Img}
+		quality="max"
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 250 x 250 px y de calidad Max -->
+
+	<h3>Formato: JPG</h3>
+	<Image
+		src={post05Img}
+		quality="max"
+		format="jpg"
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 250 x 250 px y de calidad Max y es JPG -->
+
+	<h3>Formato: Avif</h3>
+	<Image
+		src={post05Img}
+		quality="max"
+		format="avif"
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 250 x 250 px y de calidad Max y es Avif -->
+
+	<h3>Picture, Diferentes formatos</h3>
+	<Picture
+		src={post05Img}
+		quality="max"
+		formats={["avif", "webp", "jpg", "png"]}
+		style={{ width: "250px", height: "250px" }}
+		width="500"
+		height="500"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 500 x 500 px y de calidad Max, se muestra en 250 x 250 px y crea todos los formatos soportados por en el array  -->
+
+	<h3>Picture, diferentes tamaños</h3>
+	<Picture
+		src={post05Img}
+		quality="max"
+		widths={[240, 540, 720, post05Img.width]}
+		sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${post05Img.width}px`}
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+	<!-- Esta img mide 250 x 250 px y de calidad Max, se muestra en 250 x 250 px y crea todos los tamaños en el array y los muestra según el tamaño de pantalla -->
+
+	<h3>Picture, diferentes densidades</h3>
+	<Picture
+		src={post05Img}
+		quality="max"
+        width={post05Img.width / 2}
+        densities={[1.5, 2]}
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+    <!-- densities no se puede ocupar con widths y sizes, son excluyentes -->
+	<!-- Esta img mide 250 x 250 px y de calidad Max, se muestra en 250 x 250 px y crea todos los tamaños en el array y los muestra según el tamaño de pantalla -->
 
 
-    <h3>De Public</h3>
-    <img src="/assets/images/post-05.png" width="250" height="250" alt="">
 
-    <Image src="/assets/images/post-05.png" width="250" height="250" alt="imagen de ejemplo"/>
 
-    <div style={{
-        height: '3000px'
-    }}></div>
 
-    <img src="/assets/images/post-05.png" loading="lazy">
+
+	<hr />
+	<h2>De Public</h2>
+	<img src="/assets/images/post-05.png" width="250" height="250" alt="" />
+	<!-- Esta img mide 1024 x 1024 px y se muestra en 250 x 250 px, se vé de mejor calidad -->
+
+	<Image
+		src="/assets/images/post-05.png"
+		width="250"
+		height="250"
+		alt="imagen de ejemplo"
+	/>
+
+	<div
+		style={{
+			height: "3000px",
+		}}
+	>
+	</div>
+
+	<img src="/assets/images/post-05.png" loading="lazy" /> -->
 </MainLayout>
+
+<style>
+	@import "tailwindcss";
+
+	h2 {
+		@apply text-white text-2xl mt-10;
+	}
+	h3 {
+		@apply text-white text-xl;
+	}
+</style>
