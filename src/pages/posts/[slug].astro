@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import { Image } from "astro:assets";
 
 export const getStaticPaths = (async () => {
     
@@ -26,16 +27,26 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { post } = Astro.props;
-const { title, author } = post.data
+const { title, author, image } = post.data
+const { slug } = Astro.params;
 
 const { Content, headings } = await post.render() // esto es para renderizar el contenido del md
 // headings es un array de objetos con el id y el text de los headings
-console.log("🚀 ~ headings:", headings)
 ---
 
 <BlogLayout title={title}>
     <!-- <h1 class="text-md text-gray-500 mb-0">{title}</h1> -->
     <h4 class="text-md text-gray-400 mb-0">{author}</h4>
+
+    <!-- imagen -->
+    <Image
+        src={image}
+        alt={`imagen de portada del artículo ${title}`}
+        class="object-cover w-full h-56 rounded-lg"
+        width={1000}
+        loading="lazy"
+        transition:name={`transition-img-${title}`}
+    />
 
     <h3>Tabla de contenidos</h3>
     <ol>
