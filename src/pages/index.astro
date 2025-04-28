@@ -18,6 +18,8 @@ const blogPosts = await getCollection("blog");
 				{ siteConfig.title }
 			</h1>
 
+			<a href="/blog/1">Blog Paginado</a>
+
 			<div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
 				{
 					blogPosts.map((post) => (
@@ -34,3 +36,14 @@ const blogPosts = await getCollection("blog");
 		</div>
 	</section>
 </MainLayout>
+
+
+<style>
+    @import "tailwindcss";
+    /* el punto y coma después del tailwindcss es importante colocarlo, sino, falla */
+
+	a {
+		@apply text-blue-500 hover:underline;
+	}
+</style>
+
