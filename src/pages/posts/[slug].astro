@@ -11,6 +11,7 @@ export const getStaticPaths = (async () => {
 
 	return blogPosts.map((post) => {
 		return {
+			// el params { mismoNomreQueElArchivo: elNombreQueVaATener }
 			params: { slug: post.slug },
 			props: { post: post },
 		};
@@ -49,7 +50,7 @@ const nameAuthor = await getEntry("author", author.id);
 		/>
 
 		<div class="flex flex-col ml-5">
-			<a href="#">{nameAuthor?.data.name}</a>
+			<a href={`/blog/${nameAuthor?.id}`}>{nameAuthor?.data.name}</a>
 			<span class="text-xs text-gray-200">{Formatter.formatDate(date)}</span>
 		</div>
 	</div>
