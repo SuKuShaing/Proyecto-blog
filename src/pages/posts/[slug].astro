@@ -3,68 +3,84 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import { Formatter } from "@/utils/formatters";
 
 export const getStaticPaths = (async () => {
-    
-    const blogPosts = await getCollection("blog");
+	const blogPosts = await getCollection("blog");
 
-    return blogPosts.map((post) => {
-        return {
-            params: { slug: post.slug },
-            props: { post: post }
-        }
-    })
-    
-    // [{
-    //     params: { slug: 'post-01' },
-    //     props: {
-    //         title: 'Post 01 y qué pasa',
-    //         // description: 'Descripción del post 01',
-    //         // image: 'https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    //         // date: new Date('2023-10-01')
-    //     }
-    // }];
+	return blogPosts.map((post) => {
+		return {
+			params: { slug: post.slug },
+			props: { post: post },
+		};
+	});
+
+	// [{
+	//     params: { slug: 'post-01' },
+	//     props: {
+	//         title: 'Post 01 y qué pasa',
+	//         // description: 'Descripción del post 01',
+	//         // image: 'https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+	//         // date: new Date('2023-10-01')
+	//     }
+	// }];
 }) satisfies GetStaticPaths;
 
 const { post } = Astro.props;
-const { title, author, image } = post.data
+const { title, author, image, date } = post.data;
 const { slug } = Astro.params;
 
-const { Content, headings } = await post.render() // esto es para renderizar el contenido del md
+const { Content, headings } = await post.render(); // esto es para renderizar el contenido del md
 // headings es un array de objetos con el id y el text de los headings
+const nameAuthor = await getEntry("author", author.id);
 ---
 
 <BlogLayout title={title}>
-    <!-- <h1 class="text-md text-gray-500 mb-0">{title}</h1> -->
-    <h4 class="text-md text-gray-400 mb-0">{author}</h4>
+	<!-- <h1 class="text-md text-gray-500 mb-0">{title}</h1> -->
+	<div class="text-md text-gray-400 mb-4 flex flex-row mt-2">
+		<Image
+			src={nameAuthor?.data.avatar}
+			class="rounded-full bg-cover size-12"
+			alt={`imagen de autor ${nameAuthor?.data.name}`}
+			width={100}
+			height={100}
+			loading="lazy"
+		/>
 
-    <!-- imagen -->
-    <Image
-        src={image}
-        alt={`imagen de portada del artículo ${title}`}
-        class="object-cover w-full h-56 rounded-lg"
-        width={1000}
-        loading="lazy"
-        transition:name={`transition-img-${title}`}
-    />
+		<div class="flex flex-col ml-5">
+			<a href="#">{nameAuthor?.data.name}</a>
+			<span class="text-xs text-gray-200">{Formatter.formatDate(date)}</span>
+		</div>
+	</div>
 
-    <h3>Tabla de contenidos</h3>
-    <ol>
-        {
-            headings.map((headings, index) => (
-                <li>
-                    <a href={`#${ headings.slug }`}>
-                        { index + 1 } - { headings.text }
-                    </a>
-                </li>
-            ))
-        }
-    </ol>
+	<!-- imagen banner -->
+	<Image
+		src={image}
+		alt={`imagen de portada del artículo ${title}`}
+		class="object-cover w-full h-56 rounded-lg"
+		width={1000}
+		loading="lazy"
+		transition:name={`transition-img-${title}`}
+	/>
 
-    <!-- Contenido -->
-    <Content />
+	<h3>Tabla de contenidos</h3>
+	<ol>
+		{
+			headings.map((headings, index) => (
+				<li>
+					<a href={`#${headings.slug}`}>
+						{index + 1} - {headings.text}
+					</a>
+				</li>
+			))
+		}
+	</ol>
 
-    <div class="my-20">
-        <a href="#btn-back">Ir arriba</a>
-    </div>
+	<!-- Contenido -->
+	<Content />
+
+	<div class="my-20">
+		<a href="#btn-back">Ir arriba</a>
+	</div>
 </BlogLayout>
