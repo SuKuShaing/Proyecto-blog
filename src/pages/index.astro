@@ -5,8 +5,10 @@ import { siteConfig } from "@config/site-config";
 import MainLayout from "@layouts/MainLayout.astro";
 import TypedBlogPostCard from "@components/TypedBlogPostCard.astro";
 
-const blogPosts = await getCollection("blog");
-
+const blogPosts = await getCollection(
+	"blog",
+	(post) => post.data.isDraft === false
+);
 ---
 
 <MainLayout title="Seba Blog">
@@ -15,17 +17,13 @@ const blogPosts = await getCollection("blog");
 			<h1
 				class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white"
 			>
-				{ siteConfig.title }
+				{siteConfig.title}
 			</h1>
 
 			<a href="/blog/1">Blog Paginado</a>
 
 			<div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
-				{
-					blogPosts.map((post) => (
-						<TypedBlogPostCard post={post}/>
-					))
-				}
+				{blogPosts.map((post) => <TypedBlogPostCard post={post} />)}
 				<!-- <BlogPostCard 
 					title="Post 1"
 					description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -37,13 +35,11 @@ const blogPosts = await getCollection("blog");
 	</section>
 </MainLayout>
 
-
 <style>
-    @import "tailwindcss";
-    /* el punto y coma después del tailwindcss es importante colocarlo, sino, falla */
+	@import "tailwindcss";
+	/* el punto y coma después del tailwindcss es importante colocarlo, sino, falla */
 
 	a {
 		@apply text-blue-500 hover:underline;
 	}
 </style>
-

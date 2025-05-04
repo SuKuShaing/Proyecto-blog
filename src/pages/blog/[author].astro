@@ -11,28 +11,27 @@ import { getCollection } from "astro:content";
 // getCollection('Author')
 
 export const getStaticPaths = (async () => {
-    // esto está correcto
-    // const blogPosts = await getCollection("blog");
-    // const authors = await getCollection("author");
+	// esto está correcto
+	// const blogPosts = await getCollection("blog");
+	// const authors = await getCollection("author");
 
-    // Esto hace una sola petición
-    const [authors, posts] = await Promise.all([
-        getCollection("author"),
-        getCollection("blog"),
-    ]);
+	// Esto hace una sola petición
+	const [authors, posts] = await Promise.all([
+		getCollection("author"),
+		getCollection("blog"),
+	]);
 
-    return authors.map((author) => {
-        return {
-            // el params { mismoNomreQueElArchivo: elNombreQueVaATener }
-            params: { author: author.id },
-            props: {
-                blogPosts: posts.filter((post) => post.data.author.id === author.id),
-                author: author.data,
-            }
-        }
-    })
+	return authors.map((author) => {
+		return {
+			// el params { mismoNomreQueElArchivo: elNombreQueVaATener }
+			params: { author: author.id },
+			props: {
+				blogPosts: posts.filter((post) => post.data.author.id === author.id),
+				author: author.data,
+			},
+		};
+	});
 }) satisfies GetStaticPaths;
-
 
 const { blogPosts, author } = Astro.props;
 ---
@@ -44,6 +43,7 @@ const { blogPosts, author } = Astro.props;
 				<!-- {siteConfig.title} -->
 				{`Blogs escritos por ${author.name}`}
 			</h1>
+			<a href="/">Regresar</a>
 
 			<div class="text-md text-gray-400 mb-0 flex flex-row mt-2">
 				<Image
@@ -68,8 +68,8 @@ const { blogPosts, author } = Astro.props;
 </MainLayout>
 
 <style is:global>
-    @import "tailwindcss";
-    
+	@import "tailwindcss";
+
 	a {
 		@apply text-blue-500 hover:underline;
 	}
