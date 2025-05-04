@@ -1,0 +1,35 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import AuthorCard from "@/components/AuthorCard.astro";
+import { getCollection } from "astro:content";
+
+const autores = await getCollection("author");
+console.log("🚀 ~ autores:", autores)
+---
+
+<MainLayout title="Listado de autores">
+	<div class="container px-6 py-5 mx-auto">
+		<h1
+			class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white"
+		>
+			Hola mundo
+		</h1>
+	</div>
+
+	<section class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {
+            autores.map((autor) => (
+                <AuthorCard 
+                    name={autor.data.name}
+                    avatar={autor.data.avatar}
+                    twitter={autor.data.twitter}
+                    linkedin={autor.data.linkedIn}
+                    github={autor.data.github}
+                    bio={autor.data.bio}
+                    subtitle={autor.data.subtitle}
+                    slug={autor.id}
+                />
+            ))
+        }
+	</section>
+</MainLayout>

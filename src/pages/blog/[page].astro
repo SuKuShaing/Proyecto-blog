@@ -26,6 +26,7 @@ const { page } = Astro.props;
 		<h1 class="text-3xl font-semibold capitalize lg:text-4xl text-white">
 			Seba's Blog paginado
 		</h1>
+		<a class="retorno" href="/">Regresar</a>
 	</div>
 
 	<section class="bg-gray-900" aria-label="Entradas de blog">
@@ -63,5 +64,11 @@ const { page } = Astro.props;
 
 	.disabled {
 		@apply bg-gray-600 hover:bg-gray-600;
+	}
+
+	.retorno {
+		/* quitar los estilos anteriores */
+		@apply bg-gray-900 text-white p-2 rounded hover:bg-gray-900 cursor-pointer;
+		@apply text-blue-500 hover:underline;
 	}
 </style>

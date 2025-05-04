@@ -27,7 +27,7 @@ export const getStaticPaths = (async () => {
 			params: { author: author.id },
 			props: {
 				blogPosts: posts.filter((post) => post.data.author.id === author.id),
-				author: author.data,
+				author: author,
 			},
 		};
 	});
@@ -41,21 +41,23 @@ const { blogPosts, author } = Astro.props;
 		<div class="container px-6 py-10 mx-auto">
 			<h1 class="text-3xl font-semibold capitalize lg:text-4xl text-white">
 				<!-- {siteConfig.title} -->
-				{`Blogs escritos por ${author.name}`}
+				{`Blogs escritos por ${author.data.name}`}
 			</h1>
 			<a href="/">Regresar</a>
 
 			<div class="text-md text-gray-400 mb-0 flex flex-row mt-2">
 				<Image
 					class="rounded-full"
-					src={author.avatar}
-					alt={author.name}
+					src={author.data.avatar}
+					alt={author.data.name}
 					width={50}
 					height={50}
+					loading="lazy"
+					transition:name={`foto-perfil-${author.id}`}
 				/>
 
 				<div class="flex flex-col ml-5">
-					<a>{author.name}</a>
+					<a transition:name={`nombre-${author.id}`}>{author.data.name}</a>
 					<span>Listado de todos mis posts</span>
 				</div>
 			</div>
