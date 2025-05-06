@@ -43,7 +43,10 @@ const { blogPosts, author } = Astro.props;
 				<!-- {siteConfig.title} -->
 				{`Blogs escritos por ${author.data.name}`}
 			</h1>
-			<a href="/">Regresar</a>
+			<div class="flex gap-3">
+				<a class="retorno" href="/">Inicio</a>
+				<a class="retorno" href="javascript:history.back()">Regresar</a>
+			</div>
 
 			<div class="text-md text-gray-400 mb-0 flex flex-row mt-2">
 				<Image
@@ -57,7 +60,7 @@ const { blogPosts, author } = Astro.props;
 				/>
 
 				<div class="flex flex-col ml-5">
-					<a transition:name={`nombre-${author.id}`}>{author.data.name}</a>
+					<h3 class="text-xl">{author.data.name}</h3>
 					<span>Listado de todos mis posts</span>
 				</div>
 			</div>

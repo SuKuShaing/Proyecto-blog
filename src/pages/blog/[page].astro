@@ -6,16 +6,15 @@ import { getCollection } from "astro:content";
 import TypedBlogPostCard from "@/components/TypedBlogPostCard.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
-    
-    const blogPosts = await getCollection("blog");
+	const blogPosts = await getCollection("blog");
 
-    return paginate(blogPosts, { pageSize: 2 });
-    // return blogPosts.map((post) => {
-    //     return {
-    //         params: { slug: post.slug },
-    //         props: { page: post }
-    //     }
-    // })
+	return paginate(blogPosts, { pageSize: 2 });
+	// return blogPosts.map((post) => {
+	//     return {
+	//         params: { slug: post.slug },
+	//         props: { page: post }
+	//     }
+	// })
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
@@ -26,7 +25,7 @@ const { page } = Astro.props;
 		<h1 class="text-3xl font-semibold capitalize lg:text-4xl text-white">
 			Seba's Blog paginado
 		</h1>
-		<a class="retorno" href="/">Regresar</a>
+		<a class="retorno" href="javascript:history.back()">Regresar</a>
 	</div>
 
 	<section class="bg-gray-900" aria-label="Entradas de blog">
@@ -55,8 +54,8 @@ const { page } = Astro.props;
 </MainLayout>
 
 <style>
-    @import "tailwindcss";
-    /* el punto y coma después del tailwindcss es importante colocarlo, sino, falla */
+	@import "tailwindcss";
+	/* el punto y coma después del tailwindcss es importante colocarlo, sino, falla */
 
 	a {
 		@apply bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer;
