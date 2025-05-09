@@ -13,5 +13,5 @@ export default defineConfig({
     },
 
   integrations: [mdx()],
-  site: 'https://seba-blog.netlify.app',
+  site: 'https://seba-blog.netlify.app', //cada cosa que necesite 'site', buscará Astro.site y lo obtiene de aquí
 });
